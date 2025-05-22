@@ -32,7 +32,7 @@ timestamp = datetime.today().strftime("%Y%m%d_%H%M%S")
 dataFile_path = fr'{DATA_DIR}\plaxis_data_file_{timestamp}.txt'
 
 # Plaxis input information
-plaxis_password = 'w!V+ZGheHT%V!6U^'
+plaxis_password = 'temporary_password'
 calculationsToRun = 2500
 
 # Starting plaxis web server
@@ -56,8 +56,6 @@ def add_results_to_data_item(data, Uy_max, Uy_min):
         data['Uy'] = (Uy_min + Uy_max)/2
         data['rot'] = math.asin(diffY / data['foundationWidth'])
     return data
-
-
 
 
 
