@@ -15,7 +15,7 @@ def start_plaxis_web_server(plaxis_password):
     si, gi = new_server('localhost', 10000, password=plaxis_password)
     return si, gi
 
-def createModel(si, gi, data):
+def create_model(si, gi, data_dict, plaxis_password):
     """
     Creating the a plaxis model with prescribed model logic and model functions.
     
@@ -24,11 +24,11 @@ def createModel(si, gi, data):
     Returns min and max displacements for the single plate that is in the model.
     """
     # Plaxis modelling
-    initiate_model(si, gi, data)
-    create_borehole(gi, data)
-    insert_foundation(gi, data)
-    insert_pointload(gi, data)
+    initiate_model(si, gi, data_dict)
+    create_borehole(gi, data_dict)
+    insert_foundation(gi, data_dict)
+    insert_pointload(gi, data_dict)
     mesh(gi)
     calculation_phase = stage_construction(gi)
-    Uy_max, Uy_min = output_and_extraction(gi, calculation_phase)
-    return Uy_max, Uy_min
+    Uy = output_and_extraction(gi, calculation_phase, plaxis_password)
+    return Uy
