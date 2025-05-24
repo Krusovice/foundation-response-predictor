@@ -1,5 +1,7 @@
 from src.plaxis.model_functions import initiate_model, create_borehole, insert_foundation, insert_pointload, mesh, stage_construction, output_and_extraction
+from src.plaxis import external_libs
 from plxscripting.easy import * # External package that comes with Plaxis installation
+
 
 # Plaxis objects, new_server comes from the plaxis module
 def start_plaxis_web_server(plaxis_password):

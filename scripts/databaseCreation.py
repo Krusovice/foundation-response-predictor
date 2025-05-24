@@ -2,28 +2,19 @@
 import random
 import math
 import json
-from utils import DATA_DIR
+from src.utils.paths import DATA_DIR
+
 from datetime import datetime
-from src.plaxis.model_creation import createModel
+from src.plaxis.model_creation import start_plaxis_web_server,createModel
 
-# Foundation Sizes
-foundationWidth = [1,1.5,2,2.5,3,3.5,4]
-
-# Soil E module variations
-E_min = 10000
+#%%
+foundationWidth = [1,1.5,2,2.5,3,3.5,4] # Foundation Sizes
+E_min = 10000 # Soil E module variations
 E_max = 100000
-
-# Soil model
-soilModel = 'MC'
-
-# Eccentricity variation in relation to foundation with 10
-ecc_factor_min = 0
+soilModel = 'MC' # Soil model
+ecc_factor_min = 0 # Eccentricity variation in relation to foundation with 10
 ecc_factor_max = 0.3 # This eccentricity factor is multiplied onto the foundation width.
-
-# Layer thickness
-soilLayerThickness = 0.5
-
-# Model boundary condition locations
+soilLayerThickness = 0.5 # Layer thickness
 modelWidthFactor = 4 # Model with in total, in relation to the foundation width
 modelDepthFactor = 2 # Model depth in relation to the foundation width
 
