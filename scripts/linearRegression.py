@@ -1,14 +1,17 @@
 
 import numpy as np
 import pandas as pd
-from sklearn.linear_model import LinearRegression, Lasso, ElasticNet, LassoCV
-from sklearn.preprocessing import PolynomialFeatures, StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+# from sklearn.linear_model import LinearRegression, Lasso, ElasticNet, LassoCV
+# from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+# from sklearn.model_selection import train_test_split
+# from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestRegressor
+# from sklearn.ensemble import RandomForestRegressor
 import seaborn as sns
-from sklearn.pipeline import make_pipeline
+# from sklearn.pipeline import make_pipeline
+from src.utils.paths import DATA_DIR
+from src.ml.feature_engineering import filter_failed_calculations, inverse_soil_E, create_soil_features, create_interaction_layer
+
 
 #pd.set_option('display.max_rows', None)  # Show all rows
 pd.set_option('display.max_columns', None)  # Show all columns
@@ -16,54 +19,22 @@ pd.set_option('display.width', None)  # No line width limit
 pd.set_option('display.max_colwidth', None)  # No limit on column width
 
 
+data_file_name = 'dataFile_2025-01-30.json'
 
-filePath = r"C:\Users\jmkir\Ramboll\JMKIR - Documents\personalWebpage\foundationResponse\ML\dataFile_test.json"
-df = pd.read_json(filePath)
 
-def filter_failed_calculations(df):
-    df = df[df['Uy'] != 'Calculation failed']
-    return df
-
-def inverse_soil_E(df):
-    """
-    Inversing the Emodulus for all layers in the dataframe.
-
-    That is due to the expectation that a layers strain is
-    linearly correlated to the inversed E-modulus, not the E-modulus.
-
-    returns df
-    """
-    df['soils'] = df['soils'].apply(lambda x: [1/i for i in x])
-    return df
-
-# Substituting no soil values with a hard soil placeholder value
-def add_boundary_conditions(df):
-    """
-    Extending the number of rows for each result column, so it matches the deepest soil model.
-
-    That is introduced by evaluating the max number of rows in all input data.
-    Each input data with less rows (due to model boundary conditions)
-    are substituted with soil layers that are very hard,
-    which lead to approx. zero strain in those soil layers.
-
-    returns df
-    """
-    maxSoilLayers = max([len(i) for i in df['soils']])
+    
+    
+df = pd.read_json(DATA_DIR / data_file_name)
+df = filter_failed_calculations(df)
+df = inverse_soil_E(df)
+df, number_of_soil_layers = create_soil_features(df)
+df = create_interaction_layer(df,number_of_soil_layers)
+#%%
 
 
 
-# Filling all soil layers under BC's with zero.
-def fillSoilArray(array,maxLength):
-    fillLength = maxLength - len(array)
-    array.extend([0] * fillLength)
-    return array
 
-df['soilsNew'] = df.apply(lambda row: fillSoilArray(row['soils'], maxLength=maxSoilLayers), axis=1)
-soils_df = pd.DataFrame(df['soilsNew'].to_list(), columns=[f'soil_layer_{i}' for i in range(maxSoilLayers)])
-df = pd.concat([df, soils_df], axis=1)
 
-for i in range(maxSoilLayers):
-    df[f'soil_layer_foundation_interaction_{i}'] = df[f'soil_layer_{i}'] * df['foundationWidth']
 df = df.drop(columns=['soils','soilsNew'])
 
 #%%

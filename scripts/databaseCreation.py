@@ -20,7 +20,7 @@ modelDepthFactor = 2 # Model depth in relation to the foundation width
 
 # Database storing location
 timestamp = datetime.today().strftime("%Y%m%d_%H%M%S")
-dataFile_path = fr'{DATA_DIR}\plaxis_data_file_{timestamp}.txt'
+dataFile_path = fr'{DATA_DIR}\plaxis_data_file_{timestamp}.json'
 
 # Plaxis input information
 plaxis_password = 'temporary_password'
