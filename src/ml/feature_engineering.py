@@ -44,6 +44,8 @@ def create_soil_features(df):
     The reason for shorter lists is due to boundary conditions less deep. So each layer that is added, will
     be added as a soil layer with a very large stiffness, so it acts as not contributing to the settlements.
     
+    Also drops the soils column which becomes insignificant after this step.
+
     Takes in a dataframe.
     Returns a dataframe and number_of_soil_layers.
     """
