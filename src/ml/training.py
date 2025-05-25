@@ -1,6 +1,7 @@
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import make_pipeline
 
 def train_test_split_scaled(X, y, test_size, random_state):
 	"""
@@ -17,7 +18,7 @@ def train_test_split_scaled(X, y, test_size, random_state):
 
 	return X_train_scaled, X_test_scaled, y_train, y_test
 
-def linear_regression_model(X_train_scaled, y_train):
+def linear_regression_model(X_train_scaled, X_test_scaled, y_train, y_test):
 	"""
 	Training linear regression model.
 
@@ -25,15 +26,14 @@ def linear_regression_model(X_train_scaled, y_train):
 
 	returns model, predictions and errors.
 	"""
-
 	model = LinearRegression()
 	model.fit(X_train_scaled, y_train)
-	predictions = lin_model.predict(X_test_scaled)
-	errors = (lin_pred-y_test)/y_test
+	predictions = model.predict(X_test_scaled)
+	errors = (predictions-y_test)/y_test
 
 	return model, predictions, errors
 
-def poly_regression_model(X_train_scaled, y_train, degree):
+def polynomial_regression_model(X_train_scaled, X_test_scaled, y_train, y_test, degree):
 	"""
 	Training poynomial regression model.
 
@@ -42,11 +42,9 @@ def poly_regression_model(X_train_scaled, y_train, degree):
 
 	returns model, predictions and errors.
 	"""
-
-	degree = 2
 	model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
 	model.fit(X_train_scaled, y_train)
-	predictions = poly_model.predict(X_test_scaled)
-	errors = (poly_pred-y_test)/y_test
+	predictions = model.predict(X_test_scaled)
+	errors = (predictions-y_test)/y_test
 
 	return model, predictions, errors

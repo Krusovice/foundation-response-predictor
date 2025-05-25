@@ -1,34 +1,32 @@
 
-import numpy as np
-import pandas as pd
 # from sklearn.linear_model import LinearRegression, Lasso, ElasticNet, LassoCV
 # from sklearn.preprocessing import PolynomialFeatures
 # from sklearn.model_selection import train_test_split
 # from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
-import matplotlib.pyplot as plt
 # from sklearn.ensemble import RandomForestRegressor
-import seaborn as sns
-# from sklearn.pipeline import make_pipeline
+# import seaborn as sns
+#%% Standard packages
+import sys
+from pathlib import Path
+import pandas as pd
+
+# Setting project root
+ROOT_DIR = Path(__file__).resolve().parents[1]
+sys.path.append(str(ROOT_DIR))
+
+# Selfmade packages
 from src.utils.paths import DATA_DIR
 from src.ml.feature_engineering import filter_failed_calculations, inverse_soil_E, create_soil_features, create_interaction_layer
-from src.ml.training import train_test_split_scaled
-
-#pd.set_option('display.max_rows', None)  # Show all rows
-pd.set_option('display.max_columns', None)  # Show all columns
-pd.set_option('display.width', None)  # No line width limit
-pd.set_option('display.max_colwidth', None)  # No limit on column width
-
+from src.ml.training import train_test_split_scaled, linear_regression_model, polynomial_regression_model
 
 data_file_name = 'dataFile_2025-01-30.json'
-
-
 df = pd.read_json(DATA_DIR / data_file_name)
 df = filter_failed_calculations(df)
 df = inverse_soil_E(df)
 df, number_of_soil_layers = create_soil_features(df)
 df = create_interaction_layer(df,number_of_soil_layers)
 
-# Additional feature engineering
+# Additional selected feature engineering
 # df = df[df['foundationWidth'] > 2]
 # df = df[df['Uy'] < -0.001]
 # df = df[df['foundationWidth'] == 4]
@@ -42,10 +40,10 @@ y = df['Uy']
 
 X_train_scaled, X_test_scaled, y_train, y_test = train_test_split_scaled(X, y, test_size=0.1, random_state=42)
 
-lin_model, lin_predictions, lin_errors = linear_regression_model(X_train_scaled, y_train)
-poly_model, poly_predictions, poly_errors = poly_regression_model(X_train_scaled, y_train)
+lin_model, lin_predictions, lin_errors = linear_regression_model(X_train_scaled, X_test_scaled, y_train, y_test)
+poly_model, poly_predictions, poly_errors = polynomial_regression_model(X_train_scaled, X_test_scaled, y_train, y_test, degree=2)
 
-
+#%%
 
 # Exploring max errors
 errors = pd.DataFrame({'error':lin_errors})
