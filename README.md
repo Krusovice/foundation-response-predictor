@@ -26,4 +26,9 @@ The models will be deployed on my personal webpage and available by form.
 
 ![Prediction Example](images/foundation_response_model_errors.png)
 
+<h3>How to Run</h3>
+Clone the repository and navigate to the project directory.
+`pip install -r requirements.txt` Install dependencies
+`python scripts/databaseCreation.py` Creates database by running random simulations by Plaxis.
+`python scripts/regressionModels.py` Creates linear and polynomial regression models from the database.
 
