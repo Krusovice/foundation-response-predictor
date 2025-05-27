@@ -7,10 +7,10 @@ The models will be deployed on my personal webpage and available by form.
 
 <h3>Contents</h3>
 <ul>
-  <li><strong>Data Creation:</strong>Creates models via Python and Plaxis' REST API. Stores them as json</li>
-  <li><strong>Feature Engineering:</strong>Loading, formatting and performing feature engineering on data inputs.</li>
-  <li><strong>ML Models:</strong>Training linear, polynomial and deep learning models to predict foundations response during loading.</li>
-  <li><strong>Plotting:</strong>Training linear, polynomial and deep learning models to predict foundations response during loading.</li>
+  <li><strong>Data Creation:</strong> Creates models via Python and Plaxis' REST API. Stores them as json</li>
+  <li><strong>Feature Engineering:</strong> Loading, formatting and performing feature engineering on data inputs.</li>
+  <li><strong>ML Models:</strong> Training linear, polynomial and deep learning models to predict foundations response during loading.</li>
+  <li><strong>Plotting:</strong> Training linear, polynomial and deep learning models to predict foundations response during loading.</li>
 </ul>
 
 <h3>Tech Stack</h3>
