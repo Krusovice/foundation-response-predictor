@@ -25,4 +25,4 @@ The models will be deployed on my personal webpage and available by form.
 </ul>
 
 <h3>Example on Prediction</h3>
-![Prediction Example](images/foundation_reponse_model_errors.png)
+![Prediction Example](images/foundation_response_model_errors.png)
