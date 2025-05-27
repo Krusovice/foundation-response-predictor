@@ -9,7 +9,7 @@ def train_test_split_scaled(X, y, test_size, random_state):
 
 	Takes X and y as dataframes, test_size and random_state.
 
-	Returns scaled x-values for training ang testing, and y-values for training and testing.
+	Returns X_train and scaled x-values for training ang testing, and y-values for training and testing.
 	"""
 	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=1)
 	scaler = StandardScaler()
