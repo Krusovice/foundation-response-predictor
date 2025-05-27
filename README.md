@@ -24,5 +24,6 @@ The models will be deployed on my personal webpage and available by form.
   <li>Tensorflow</li>
 </ul>
 
+![Prediction Example](images/foundation_response_model_errors.png)
+
 <h3>Example on Prediction</h3>
-![Prediction Example](https://github.com/Krusovice/foundation-response-predictor/blob/main/images/foundation_response_model_errors.png?raw=true)
