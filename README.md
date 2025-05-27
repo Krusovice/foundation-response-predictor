@@ -13,6 +13,16 @@ The models will be deployed on my personal webpage and available by form.
   <li><strong>Plotting:</strong> Training linear, polynomial and deep learning models to predict foundations response during loading.</li>
 </ul>
 
+<h3>How to Run</h3>
+Clone the repository and navigate to the project directory.
+
+Install dependencies with `pip install -r requirements.txt`.
+
+Run the following scripts:
+
+- `python scripts/databaseCreation.py` – Creates a database by running random simulations via Plaxis.
+- `python scripts/regressionModels.py` – Trains linear and polynomial regression models from the database.
+
 <h3>Tech Stack</h3>
 <ul>
   <li>Python</li>
@@ -26,12 +36,3 @@ The models will be deployed on my personal webpage and available by form.
 
 ![Prediction Example](images/foundation_response_model_errors.png)
 
-<h3>How to Run</h3>
-Clone the repository and navigate to the project directory.
-
-Install dependencies with `pip install -r requirements.txt`.
-
-Run the following scripts:
-
-- `python scripts/databaseCreation.py` – Creates a database by running random simulations via Plaxis.
-- `python scripts/regressionModels.py` – Trains linear and polynomial regression models from the database.
