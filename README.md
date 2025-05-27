@@ -5,8 +5,6 @@ It is based on ML models and results from FE models, automatically created by Pl
 
 The models will be deployed on my personal webpage and available by form.
 
-⚠️ **Note:** The repo is still under development!
-
 <h3>Contents</h3>
 <ul>
   <li><strong>Data Creation:</strong>Creates models via Python and Plaxis' REST API. Stores them as json</li>
@@ -24,6 +22,8 @@ The models will be deployed on my personal webpage and available by form.
   <li>Tensorflow</li>
 </ul>
 
+<h3>Example on Prediction</h3>
+
 ![Prediction Example](images/foundation_response_model_errors.png)
 
-<h3>Example on Prediction</h3>
+
