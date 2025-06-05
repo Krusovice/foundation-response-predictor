@@ -6,6 +6,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 
 # Directories
 DATA_DIR = ROOT_DIR / "data"
+MODEL_EXPORT_DIR = ROOT_DIR / "model_exports"
 
 # Adding external lib from Plaxis to path
 external_libs_path = f"{ROOT_DIR}\\src\\plaxis\\external_libs"
