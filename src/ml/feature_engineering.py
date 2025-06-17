@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
 
 def filter_failed_calculations(df):
     """
@@ -33,7 +34,7 @@ def extend_array(array,max_length):
     array.extend([0] * fillLength)
     return array
 
-def create_soil_features(df):
+def create_features_soil_layers(df):
     """
     The soil layers from column 'soils' comes as lists with various lengths.
     
@@ -64,7 +65,7 @@ def create_soil_features(df):
     df = df.drop('soils', axis=1)
     return df, number_of_soil_layers
 
-def create_interaction_layer(df,number_of_soil_layers):
+def create_features_soil_interaction_layers(df,number_of_soil_layers):
     """
     Creates new features that are each soil layer * foundation with.
 

@@ -9,21 +9,22 @@ sys.path.append(str(ROOT_DIR))
 
 # Selfmade packages
 from src.utils.paths import DATA_DIR, MODEL_EXPORT_DIR
-from src.ml.feature_engineering import filter_failed_calculations, inverse_soil_E, create_soil_features, create_interaction_layer
+from src.ml.feature_engineering import filter_failed_calculations, inverse_soil_E, create_features_soil_layers, create_features_soil_interaction_layers
 from src.ml.training import train_test_split_scaled, linear_regression_model, polynomial_regression_model
 from src.plotting.erorr_plots import scatterplot_errors
 from src.plotting.coefficient_plots import plot_feature_coefficients_linear_model
 from src.ml.export_model import export_regression_model
+from sklearn.pipeline import Pipeline
 
 data_file_name = 'dataFile_2025-01-30.json'
 df = pd.read_json(DATA_DIR / data_file_name)
-df = filter_failed_calculations(df)
-df = inverse_soil_E(df)
-df, number_of_soil_layers = create_soil_features(df)
-df = create_interaction_layer(df,number_of_soil_layers)
+df = filter_failed_calculations(df) # Filtering failed calculations.
+df = df[df['soilModel'] == 'MC'].drop(columns=['soilModel']).reset_index() # Filtering out calculations that are not using MC soil model.
 
-# Filtering out linear model results
-df = df[df['soilModel'] == 'MC'].drop(columns=['soilModel'])
+
+df = inverse_soil_E(df)
+df, number_of_soil_layers = create_features_soil_layers(df)
+df = create_features_soil_interaction_layers(df,number_of_soil_layers)
 
 X = df.drop(columns=['Uy','rot'])
 y = df['Uy']
@@ -43,3 +44,4 @@ fig = plot_feature_coefficients_linear_model((8,6), lin_model, X)
 # Exporting the models
 export_regression_model(lin_model, MODEL_EXPORT_DIR, 'linear_model')
 export_regression_model(poly_model, MODEL_EXPORT_DIR, 'poly_2nd_deg_model')
+# %%
