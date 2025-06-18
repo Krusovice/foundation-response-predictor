@@ -2,7 +2,7 @@ import joblib
 from datetime import datetime
 import os
 
-def export_regression_model(model_variable, root_export_folder, model_id):
+def export_regression_model(model_pipeline, root_export_folder, model_id):
 	"""
 	Exports a scikit-learn regression model using joblib.
 
@@ -15,7 +15,7 @@ def export_regression_model(model_variable, root_export_folder, model_id):
 	Each model always contains a file named filename_latest, which is updated for each export.
 
 	args:
-		model_variable: The model variable to be exported.
+		model_pipeline: The model pipeline to be exported.
 		path: path to the root export folder directory, to be exported to.
 		model_id: the model_id of the exported model file.
 	"""
@@ -29,5 +29,5 @@ def export_regression_model(model_variable, root_export_folder, model_id):
 	export_file_path_timestamp = rf"{export_directory}/{model_id}_{timestamp}.pkl"
 	export_file_path_latest = rf"{export_directory}/{model_id}_latest.pkl"
 
-	joblib.dump(model_variable, export_file_path_timestamp)
-	joblib.dump(model_variable, export_file_path_latest)
+	joblib.dump(model_pipeline, export_file_path_timestamp)
+	joblib.dump(model_pipeline, export_file_path_latest)

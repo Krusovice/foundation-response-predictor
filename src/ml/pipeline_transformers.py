@@ -7,6 +7,9 @@ class FeatureInverseSoilE(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         return inverse_soil_E(X.copy())
+    
+    def get_feature_names_out(self, input_features=None):
+        return input_features
 
 class FeatureInteractionLayers(BaseEstimator, TransformerMixin):
     def __init__(self, n_layers):
@@ -17,3 +20,6 @@ class FeatureInteractionLayers(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         return create_features_soil_interaction_layers(X.copy(), self.n_layers)
+
+    def get_feature_names_out(self, input_features=None):
+        return input_features

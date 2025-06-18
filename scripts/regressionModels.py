@@ -41,7 +41,7 @@ feature_engineering_pipeline = Pipeline(
 )
 
 # Linear regression pipeline
-linear_pipe = Pipeline(
+linear_pipeline = Pipeline(
     steps=[
         ("features", feature_engineering_pipeline),
         ("regressor", LinearRegression())
@@ -49,7 +49,7 @@ linear_pipe = Pipeline(
 )
 
 # Polynomial regression pipeline
-poly_pipe = Pipeline(
+poly_pipeline = Pipeline(
     steps=[
         ("features", feature_engineering_pipeline),
         ("poly", PolynomialFeatures(degree=2, include_bias=False)),
@@ -59,17 +59,16 @@ poly_pipe = Pipeline(
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
-linear_pipe.fit(X_train, y_train)
-poly_pipe.fit(X_train, y_train)
-#%%
-# Plotting
-fig = scatterplot_errors((8,6), y_test, 
-            (lin_errors, 'Linear Regression', 'b'),
-            (poly_errors, 'Polynomial Regression (deg=2)', 'r'))
+linear_pipeline.fit(X_train, y_train)
+poly_pipeline.fit(X_train, y_train)
 
-fig = plot_feature_coefficients_linear_model((8,6), lin_model, X)
+# Plotting
+fig = scatterplot_errors((8,6), X_test, y_test,
+            (linear_pipeline, 'Linear Regression', 'b'),
+            (poly_pipeline, 'Polynomial Regression (deg=2)', 'r'))
+
+fig = plot_feature_coefficients_linear_model((8,6), linear_pipeline, X_train)
 
 # Exporting the models
-export_regression_model(lin_model, MODEL_EXPORT_DIR, 'linear_model')
-export_regression_model(poly_model, MODEL_EXPORT_DIR, 'poly_2nd_deg_model')
-# %%
+export_regression_model(linear_pipeline, MODEL_EXPORT_DIR, 'linear_model')
+export_regression_model(poly_pipeline, MODEL_EXPORT_DIR, 'poly_2nd_deg_model')
