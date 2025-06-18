@@ -12,14 +12,19 @@ def filter_failed_calculations(df):
 
 def inverse_soil_E(df):
     """
-    Inversing the Emodulus for all layers in the dataframe.
+    Inversing the Emodulus for all soil layers in the dataframe.
+    
+    For all columns starting with "soil_layer_", the value will is inversed.
+    If any value is 0 in the column, the inversed value will be kept at 0.
 
     That is due to the expectation that a layers strain is
     linearly correlated to the inversed E-modulus, not the E-modulus.
 
     returns df
     """
-    df['soils'] = df['soils'].apply(lambda x: [1/i for i in x])
+    for col in df.columns:
+        if col.startswith('soil_layer_'):
+            df[col] = df[col].apply(lambda x: 1/x if x != 0 else 0)
     return df
 
 
