@@ -12,12 +12,12 @@ sys.path.append(str(ROOT_DIR))
 
 # Selfmade packages
 from src.utils.paths import DATA_DIR, MODEL_EXPORT_DIR
-from src.ml.feature_engineering import filter_failed_calculations, create_features_soil_layers
+from src.ml.feature_engineering import filter_failed_calculations
 from src.plotting.erorr_plots import scatterplot_errors
 from src.plotting.coefficient_plots import plot_feature_coefficients_linear_model
 from src.ml.export_model import export_regression_model
 from sklearn.pipeline import Pipeline
-from src.ml.pipeline_transformers import FeatureInverseSoilE, FeatureInteractionLayers
+from src.ml.pipeline_transformers import FeatureInverseSoilE, FeatureInteractionLayers, ExpandSoils
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
@@ -26,7 +26,6 @@ data_file_name = 'dataFile_2025-01-30.json'
 df = pd.read_json(DATA_DIR / data_file_name)
 df = filter_failed_calculations(df) # Filtering failed calculations.
 df = df[df['soilModel'] == 'MC'].drop(columns=['soilModel']).reset_index() # Filtering out calculations that are not using MC soil model.
-df, number_of_soil_layers = create_features_soil_layers(df) # The soil layers are transformed from one column, containing a list, into separate columns.
 
 X = df.drop(columns=['Uy','rot'])
 y = df['Uy']
@@ -34,8 +33,9 @@ y = df['Uy']
 # Applying featuer engineering
 feature_engineering_pipeline = Pipeline(
     steps=[
+        ("expand_soil_layers", ExpandSoils()),
         ("inverse_E", FeatureInverseSoilE()),
-        ("interaction_soil_layers", FeatureInteractionLayers(number_of_soil_layers)),
+        ("interaction_soil_layers", FeatureInteractionLayers()),
         ("scale", StandardScaler()),
     ]
 )

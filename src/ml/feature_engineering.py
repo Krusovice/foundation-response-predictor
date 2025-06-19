@@ -39,7 +39,7 @@ def extend_array(array,max_length):
     array.extend([0] * fillLength)
     return array
 
-def create_features_soil_layers(df):
+def create_features_soil_layers(df, number_of_soil_layers=None):
     """
     The soil layers from column 'soils' comes as lists with various lengths.
     
@@ -52,12 +52,13 @@ def create_features_soil_layers(df):
     
     Also drops the soils column which becomes insignificant after this step.
 
-    Takes in a dataframe.
+    Takes in a dataframe and number of soil layers. If not number of soil layers is evaluated on basis of max number of soil layers in the dataframe.
     Returns a dataframe and number_of_soil_layers.
     """
 
     # Calculating max number of rows among all soil layers in the input data
-    number_of_soil_layers = df['soils'].apply(len).max()
+    if not number_of_soil_layers:
+        number_of_soil_layers = df['soils'].apply(len).max()
 
     # Extends up to max soil rows, with zeros.
     df['soils'] = df.apply(lambda row: extend_array(row['soils'], max_length=number_of_soil_layers), axis=1)
