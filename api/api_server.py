@@ -7,12 +7,10 @@ model = joblib.load("./models/linear_model_latest.pkl")
 
 # Define input structure (adjust fields to match your training input)
 class InputData(BaseModel):
-    width: float
+    foundationWidth: float
     eccentricity: float
-    soil_model: str
-    soil_modulus: list[float]
+    soils: list[float]
     
-
 app = FastAPI()
 
 @app.post("/predict")
