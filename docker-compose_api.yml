@@ -1,0 +1,8 @@
+services:
+  foundation-response-api:
+    container_name: foundation_response_api
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "8100:8100"
