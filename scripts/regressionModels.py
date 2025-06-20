@@ -27,7 +27,7 @@ df = pd.read_json(DATA_DIR / data_file_name)
 df = filter_failed_calculations(df) # Filtering failed calculations.
 df = df[df['soilModel'] == 'MC'].drop(columns=['soilModel']).reset_index() # Filtering out calculations that are not using MC soil model.
 
-X = df.drop(columns=['Uy','rot'])
+X = df.drop(columns=['Uy','rot','index'])
 y = df['Uy']
 
 # Applying featuer engineering
