@@ -6,3 +6,10 @@ services:
       dockerfile: api/Dockerfile
     ports:
       - "8100:8100"
+    networks:
+      - webpage_network
+    restart: on-failure
+
+networks:
+  webpage_network:
+    external: True

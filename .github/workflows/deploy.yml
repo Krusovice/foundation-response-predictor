@@ -1,0 +1,19 @@
+name: Deploy foundation-response-predictor API to Raspberry Pi
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run docker-compose file
+        run: |
+          docker-compose up -d
+
