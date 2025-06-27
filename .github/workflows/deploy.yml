@@ -15,5 +15,5 @@ jobs:
 
       - name: Run docker-compose file
         run: |
-          docker-compose up -d
+          docker-compose -f docker-compose_api.yml up -d
 
