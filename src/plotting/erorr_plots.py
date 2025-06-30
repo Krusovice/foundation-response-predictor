@@ -25,8 +25,8 @@ def scatterplot_errors(figsize, X_test, y_test, *model_inputs):
         ax1.plot(y_test*1000,errors,marker='o',linestyle='',color=i[2],label=i[1],alpha=0.3)
 
     ax1.invert_xaxis()
-    ax1.set_xlabel('Actual Settlement, U$_{actual}$ [mm]')
-    ax1.set_ylabel('(U$_{pred}$ - U$_{test}$) / U$_{test}$ [-]')
+    ax1.set_xlabel('Actual Settlement, U [mm]')
+    ax1.set_ylabel('(U$_{pred}$ - U) / U [-]')
     ax1.minorticks_on()
     ax1.grid(which='major',alpha=0.5)
     ax1.grid(which='minor',alpha=0.2)

@@ -21,6 +21,7 @@ from src.ml.pipeline_transformers import FeatureInverseSoilE, FeatureInteraction
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+from src.ml.performance_evaluation import performance_evaluation
 
 data_file_name = 'dataFile_2025-01-30.json'
 df = pd.read_json(DATA_DIR / data_file_name)
@@ -63,11 +64,17 @@ linear_pipeline.fit(X_train, y_train)
 poly_pipeline.fit(X_train, y_train)
 
 # Plotting
-fig = scatterplot_errors((8,6), X_test, y_test,
+fig_errors, ax_errors = scatterplot_errors((8,4), X_test, y_test,
             (linear_pipeline, 'Linear Regression', 'b'),
             (poly_pipeline, 'Polynomial Regression (deg=2)', 'r'))
 
-fig = plot_feature_coefficients_linear_model((8,6), linear_pipeline, X_train)
+fig_coefficients = plot_feature_coefficients_linear_model((8,6), linear_pipeline, X_train)
+
+r2, mape, rmse, relative_rmse = performance_evaluation(X_test, y_test, linear_pipeline)
+print(f"r2: {format(r2,'0.4f')}")
+print(f"mean absolute percent error: {format(mape,'0.4f')}")
+print(f"root mean squared error: {format(rmse,'0.4f')}")
+print(f"relative root mean squared error: {format(relative_rmse,'0.4f')}")
 
 # Exporting the models
 export_regression_model(linear_pipeline, MODEL_EXPORT_DIR, 'linear_model')
