@@ -80,5 +80,10 @@ def predict(body: JsonBody):
     print('data')
     print(data)
     df = pd.DataFrame([data.dict()])
-    prediction = model.predict(df)
+
+    # the predictions are based on a load of 100 kPa.
+    # In this state, we define a linear relationship between predictions and load.
+    # Therefore just multiplying the load / 100.
+    # Prediction returned in mm
+    prediction = model.predict(df) * body.load/100 * 1000
     return float(prediction[0])
