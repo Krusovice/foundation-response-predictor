@@ -40,12 +40,13 @@ def formatInputData(body: JsonBody) -> ModelInputData:
     eccentricity = body.eccentricity
     soils = []
 
-    interval = 0.25
-    surfaceLevel = body.soilLayers[0].level
+    number_of_layers = 16
+    layer_thickness = 0.25
+    surface_level = body.soilLayers[0].level
 
-    for i in range(int(4/interval)):
-        level = surfaceLevel - i*interval
-        for soilLayer in body.soilLayers:
+    for i in range(number_of_layers):
+        level = surface_level - i*layer_thickness
+        for soilLayer in reversed(body.soilLayers):
             if level <= soilLayer.level:
                 Eoed = soilLayer.Eoed
                 break # Breaking the inner loop (j-looop)
@@ -79,7 +80,5 @@ def predict(body: JsonBody):
     print('data')
     print(data)
     df = pd.DataFrame([data.dict()])
-    print(df)
     prediction = model.predict(df)
-    print(prediction)
     return float(prediction[0])
