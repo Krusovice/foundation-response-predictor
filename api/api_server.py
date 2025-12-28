@@ -67,11 +67,13 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",   # Vite dev
         "http://127.0.0.1:5173",
+        "https://jkirstein.dk",
+        "https://www.jkirstein.dk",
         # add your prod origin(s) later, e.g. "https://yourdomain.com"
     ],
-    allow_credentials=True,
-    allow_methods=["*"],          # or ["POST", "OPTIONS"]
-    allow_headers=["*"],
+        allow_credentials=False,
+        allow_methods=["POST", "OPTIONS"],
+        allow_headers=["Content-Type"],
 )
 
 @app.post("/predict")
